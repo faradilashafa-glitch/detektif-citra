@@ -1,0 +1,6 @@
+{
+  "name": "GeoExplore – LKPD Penginderaan Jauh",
+  "description": "Web LKPD Interaktif Geografi Kelas X: Penginderaan Jauh – Pengenalan Objek pada Citra (Aktivitas Detektif Citra Kampung Jodipan Malang)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

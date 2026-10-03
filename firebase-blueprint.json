@@ -1,0 +1,180 @@
+{
+  "entities": {
+    "group": {
+      "title": "Student Group LKPD Submission",
+      "description": "State and answers of a student group working on LKPD Detektif Citra",
+      "type": "object",
+      "properties": {
+        "groupName": {
+          "type": "string",
+          "description": "Name chosen by the group",
+          "maxLength": 100
+        },
+        "className": {
+          "type": "string",
+          "description": "Class identifier (e.g. X-1)",
+          "maxLength": 50
+        },
+        "groupNumber": {
+          "type": "string",
+          "description": "Group number from 1 to 6",
+          "enum": ["1", "2", "3", "4", "5", "6"]
+        },
+        "members": {
+          "type": "array",
+          "description": "List of group member names (up to 6 members)"
+        },
+        "assignedArea": {
+          "type": "string",
+          "description": "Assigned geographical region in Malang",
+          "maxLength": 200
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the uploaded satellite imagery for this group",
+          "maxLength": 2000
+        },
+        "answers": {
+          "type": "object",
+          "description": "Answers to the five image observation questions"
+        },
+        "observations": {
+          "type": "array",
+          "description": "Table rows of detected objects and reasoning"
+        },
+        "presentationObjects": {
+          "type": "object",
+          "description": "Two selected objects for 1-minute classroom presentation"
+        },
+        "reflection": {
+          "type": "object",
+          "description": "Post-activity reflection and answers"
+        },
+        "progress": {
+          "type": "number",
+          "description": "Progress percentage between 0 and 100"
+        },
+        "status": {
+          "type": "string",
+          "description": "Workflow status",
+          "enum": ["not_started", "in_progress", "submitted", "graded", "revision"]
+        },
+        "startedAt": {
+          "type": "string",
+          "description": "ISO timestamp when the group began working",
+          "maxLength": 50
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "ISO timestamp when the LKPD was submitted",
+          "maxLength": 50
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last modification",
+          "maxLength": 50
+        }
+      },
+      "required": ["groupNumber", "status"]
+    },
+    "score": {
+      "title": "Teacher Evaluation & Rubric Score",
+      "description": "Assessment of student group LKPD according to the 100-point rubric",
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string",
+          "description": "ID of the evaluated group",
+          "maxLength": 20
+        },
+        "objectIdentification": {
+          "type": "number",
+          "description": "Accuracy of identifying objects (0-30 points)"
+        },
+        "visualReasoning": {
+          "type": "number",
+          "description": "Visual features and logical reasoning (0-25 points)"
+        },
+        "completeness": {
+          "type": "number",
+          "description": "Completeness of observation table (0-20 points)"
+        },
+        "presentation": {
+          "type": "number",
+          "description": "Presentation and discussion quality (0-15 points)"
+        },
+        "reflection": {
+          "type": "number",
+          "description": "Reflection and teamwork quality (0-10 points)"
+        },
+        "totalScore": {
+          "type": "number",
+          "description": "Total combined score (0-100 points)"
+        },
+        "teacherFeedback": {
+          "type": "string",
+          "description": "Constructive feedback and guidance from teacher",
+          "maxLength": 2000
+        },
+        "gradedAt": {
+          "type": "string",
+          "description": "ISO timestamp when graded",
+          "maxLength": 50
+        },
+        "gradedBy": {
+          "type": "string",
+          "description": "Teacher email or name",
+          "maxLength": 100
+        }
+      },
+      "required": ["groupId", "totalScore"]
+    },
+    "setting": {
+      "title": "Global Settings and Images",
+      "description": "Classroom settings, default areas, and uploaded images for groups",
+      "type": "object",
+      "properties": {
+        "groupAreas": {
+          "type": "object",
+          "description": "Mapping from group number to designated region"
+        },
+        "groupImages": {
+          "type": "object",
+          "description": "Mapping from group number to satellite image URL"
+        },
+        "timerDuration": {
+          "type": "number",
+          "description": "Class session timer duration in seconds (45 min = 2700)"
+        },
+        "timerStartedAt": {
+          "type": "number",
+          "description": "Timestamp when the 45-min timer was started"
+        },
+        "timerIsRunning": {
+          "type": "boolean",
+          "description": "Whether the class timer is currently running"
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/groups/{groupId}": {
+      "schema": {
+        "$ref": "#/entities/group"
+      },
+      "description": "Submissions and live progress for each of the 6 student groups"
+    },
+    "/scores/{groupId}": {
+      "schema": {
+        "$ref": "#/entities/score"
+      },
+      "description": "Teacher rubric grading and feedback for each group"
+    },
+    "/settings/{settingId}": {
+      "schema": {
+        "$ref": "#/entities/setting"
+      },
+      "description": "App settings including group area assignments and uploaded image URLs"
+    }
+  }
+}
